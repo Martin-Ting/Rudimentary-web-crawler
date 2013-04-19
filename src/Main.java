@@ -6,6 +6,15 @@
  * Editors:
  *   imnotmartin (mting005@ucr.edu)
  */
+
+import org.jsoup.*;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+
+import javax.xml.*;
 import java.util.Vector;
 //import java.util.concurrent.*;
 
@@ -52,85 +61,53 @@ class Crawler {
 
     }
 }
-//====================================================================================================================//
-
+class Pair<T1, T2>{
+    private T1 left;
+    private T2 right;
+    public Pair(T1 inLeft, T2 inRight){
+        left = inLeft;
+        right = inRight;
+    }
+    public T1 getLeft(){
+        return left;
+    }
+    public T2 getRight(){
+        return right;
+    }
+}
 public class Main {
+    Crawler c;
 
+    public void __init_(int num_crawlers){
 
+    }
     public static void main(String[] args){
+
         System.out.println("Hello, World!");
         System.out.println("Hopefully, now, you have finished with setting up java JDK, IntelliJ IDE, and Git setup\n");
         System.out.println("First, you want to crawl for robots.txt and parse that.");
         System.out.println("Now that you have crawl parameters, do this: (read comments)");
-        /*  Use the Jsoup.connect(String url) method:
+        Document doc;
+        Vector<Pair<String, String> > frontier;
+        frontier = new Vector<Pair<String, String> >(50);
+        try{
+            doc = Jsoup.connect("http://www.cs.ucr.edu/").get();
+            String docHTML= doc.html();
+            System.out.println(docHTML);
+            doc = Jsoup.parse(docHTML);
+            Element content = doc.getElementById("content");
+            Elements links = content.getElementsByTag("a");
+            for (Element link : links) {
+                String linkHref = link.attr("href");                           //link
+                String linkText = link.text();                                 //hyperlinked text
+                System.out.println("Printing element: ");
+                System.out.println(linkHref + "\n" + linkText);
+                frontier.add(new Pair<String, String>(linkHref, linkText));
+            }
 
-Document doc = Jsoup.connect("http://example.com/").get();
-String title = doc.title();
-
-Description
-
-The connect(String url) method creates a new Connection, and get() fetches and parses a HTML file. If an error occurs whilst fetching the URL, it will throw an IOException, which you should handle appropriately.
-
-The Connection interface is designed for method chaining to build specific requests:
-
-Document doc = Jsoup.connect("http://example.com")
-  .data("query", "Java")
-  .userAgent("Mozilla")
-  .cookie("auth", "token")
-  .timeout(3000)
-  .post();
-
-This method only suports web URLs (http and https protocols); if you need to load from a file, use the parse(File in, String charsetName) method instead.
-*/
-                /*
-                  String html = "<html><head><title>First parse</title></head>"
-  + "<body><p>Parsed HTML into a doc.</p></body></html>";
-Document doc = Jsoup.parse(html);
-                */
-        /*
-                Use the DOM-like methods available after parsing HTML into a Document.
-
-File input = new File("/tmp/input.html");
-Document doc = Jsoup.parse(input, "UTF-8", "http://example.com/");
-
-Element content = doc.getElementById("content");
-Elements links = content.getElementsByTag("a");
-for (Element link : links) {
-  String linkHref = link.attr("href");
-  String linkText = link.text();
-}
-
-Description
-
-Elements provide a range of DOM-like methods to find elements, and extract and manipulate their data. The DOM getters are contextual: called on a parent Document they find matching elements under the document; called on a child element they find elements under that child. In this way you can winnow in on the data you want.
-Finding elements
-
-    getElementById(String id)
-    getElementsByTag(String tag)
-    getElementsByClass(String className)
-    getElementsByAttribute(String key) (and related methods)
-    Element siblings: siblingElements(), firstElementSibling(), lastElementSibling(); nextElementSibling(), previousElementSibling()
-    Graph: parent(), children(), child(int index)
-
-Element data
-
-    attr(String key) to get and attr(String key, String value) to set attributes
-    attributes() to get all attributes
-    id(), className() and classNames()
-    text() to get and text(String value) to set the text content
-    html() to get and html(String value) to set the inner HTML content
-    outerHtml() to get the outer HTML value
-    data() to get data content (e.g. of script and style tags)
-    tag() and tagName()
-
-Manipulating HTML and text
-
-    append(String html), prepend(String html)
-    appendText(String text), prependText(String text)
-    appendElement(String tagName), prependElement(String tagName)
-    html(String value)
-
-         */
+        }catch(java.io.IOException err){
+            System.out.println("Ooops!  Jsoup can not connect to host.\n\t" + err.getMessage());
+        }
 
 
     }
