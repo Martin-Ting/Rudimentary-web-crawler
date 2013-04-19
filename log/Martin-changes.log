@@ -1,4 +1,8 @@
-April   , 2013
+Note:
+    How to work with GitHub:
+        As changes are made, when a milestone has been reached that compiles with no errors, commit your changes and
+        make a note. When a full change has been completed, "push" the files to the repo into the master branch and
+        merge it with the project. It is possible to commit multiple times before a push.
 +----------------------------------------------------------------------------------------------------------------------+
 April 15, 2013
      Created GitHub repo and working on migrating project into the repo.
