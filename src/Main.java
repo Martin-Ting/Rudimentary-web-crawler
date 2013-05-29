@@ -34,9 +34,7 @@ public class Main{
     private static AtomicBoolean okayToReset = new AtomicBoolean(true);
     private static Frontier frontier;
     private static AtomicBoolean maxDepthReached = new AtomicBoolean(false); 
-    //private int MAXDEPTH = 2;
     public class Frontier{
-        //LinkedBlockingQueue <String> URLQueue;
         private ConcurrentHashMap<String, Integer> visitedURL;
         private Vector<ConcurrentLinkedQueue<String> > masterQueue = new Vector<ConcurrentLinkedQueue<String> >(2);
 
@@ -47,7 +45,6 @@ public class Main{
         private int maxAtCurr = 0;
         private int curr = 0;
         public int currDepth = 0;
-        //public Frontier(int depth, String fileName) // imports seeds from text file and initializes masterQueue(0) with it
         public Frontier(int depth, int files, Vector<String> newURL){
             MAXFILES = files;
             MAXDEPTH = depth;
@@ -55,7 +52,6 @@ public class Main{
             masterQueue.add(1, new ConcurrentLinkedQueue<String>() );
 
             visitedURL = new ConcurrentHashMap<String, Integer>();
-            //URLQueue.addAll(newURL);
 
             for( String st : newURL ){
                 st = cleanURL(st);
